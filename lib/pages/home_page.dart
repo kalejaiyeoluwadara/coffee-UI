@@ -1,7 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/utilities/cat_tiles.dart';
 import 'package:flutter_application_1/utilities/coffee_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,6 +10,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List coffeeType = [
+    ['Cappuccino', true],
+    ['Latte', false],
+    ['Black', false],
+    ['Tea', false],
+  ];
+
+  final List coffeeItems = [
+    {
+      "imagePath": "assets/images/image1.jpg",
+      "title": "Latte",
+      "subtitle": "With Almond Milk",
+      "price": "\$4.00"
+    },
+    {
+      "imagePath": "assets/images/image2.png",
+      "title": "Cappuccino",
+      "subtitle": "Rich and Creamy",
+      "price": "\$5.00"
+    },
+    {
+      "imagePath": "assets/images/image3.jpg",
+      "title": "Black Coffee",
+      "subtitle": "Strong and Bold",
+      "price": "\$3.50"
+    },
+  ];
+
+  void onTap(int index) {
+    for (int i = 0; i < coffeeType.length; i++) {
+      coffeeType[i][1] = false;
+    }
+    setState(() {
+      coffeeType[index][1] = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +87,6 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: TextField(
               decoration: InputDecoration(
-                // filled: true,
                 fillColor: Colors.transparent,
                 prefixIcon: const Icon(
                   Icons.search,
@@ -72,15 +105,50 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 25),
-          const CatTiles(),
+          SizedBox(
+            height: 50,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25.0),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: coffeeType.length,
+                itemBuilder: (context, index) {
+                  var coffee = coffeeType[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: ChoiceChip(
+                      label: Text(coffee[0]),
+                      selected: coffee[1],
+                      onSelected: (_) {
+                        onTap(index);
+                      },
+                      selectedColor: Colors.orange,
+                      backgroundColor: Colors.grey[700],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
           Expanded(
-              child: ListView(
-            padding: const EdgeInsets.only(left: 25.0),
-            scrollDirection: Axis.horizontal,
-            children: [
-              const CoffeeTile(),
-            ],
-          ))
+            flex: 3,
+            child: ListView.builder(
+              padding: const EdgeInsets.only(left: 25.0),
+              scrollDirection: Axis.horizontal,
+              itemCount: coffeeItems.length,
+              itemBuilder: (context, index) {
+                var coffee = coffeeItems[index];
+                return CoffeeTile(
+                  imagePath: coffee["imagePath"],
+                  title: coffee["title"],
+                  subtitle: coffee["subtitle"],
+                  price: coffee["price"],
+                );
+              },
+            ),
+          ),
+          Expanded(child: Container())
         ],
       ),
     );

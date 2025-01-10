@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CoffeeTile extends StatelessWidget {
-  const CoffeeTile({super.key});
+  final String imagePath;
+  final String title;
+  final String subtitle;
+  final String price;
+
+  const CoffeeTile({
+    super.key,
+    required this.imagePath,
+    required this.title,
+    required this.subtitle,
+    required this.price,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,25 +30,34 @@ class CoffeeTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset('assets/images/image1.jpg'),
+              child: Container(
+                height: 120, // Set a consistent height for all images
+                width: double.infinity, // Match the width of the container
+                color: Colors
+                    .grey[300], // Placeholder background for missing images
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover, // Ensures the image fits proportionally
+                ),
+              ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              'Latte',
-              style: TextStyle(fontSize: 20),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 4),
             Text(
-              'With Almond Milk',
+              subtitle,
               style: TextStyle(color: Colors.grey[700]),
             ),
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  '\$4.00',
-                  style: TextStyle(fontSize: 16),
+                Text(
+                  price,
+                  style: const TextStyle(fontSize: 16),
                 ),
                 Container(
                   padding: const EdgeInsets.all(12),
