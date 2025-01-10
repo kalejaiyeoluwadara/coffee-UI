@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utilities/cat_tiles.dart';
 import 'package:flutter_application_1/utilities/coffee_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -71,13 +72,12 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 25),
+          const CatTiles(),
           Expanded(
               child: ListView(
             padding: const EdgeInsets.only(left: 25.0),
             scrollDirection: Axis.horizontal,
             children: [
-              const CoffeeTile(),
-              const CoffeeTile(),
               const CoffeeTile(),
             ],
           ))
